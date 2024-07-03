@@ -16,9 +16,9 @@
         "rootDir": "./src/",
         "baseUrl": "./src/",
         "paths": {
-            "@application/*": ["application/*"],
-            "@infrastructure/*": ["infrastructure/*"],
-            "@module/*": ["module/*"]
+            "@application/*": ["Application/*"],
+            "@infrastructure/*": ["Infrastructure/*"],
+            "@domain/*": ["Domain/*"]
         },
         "typeRoots": ["./node_modules/@types"],
         "resolveJsonModule": true,

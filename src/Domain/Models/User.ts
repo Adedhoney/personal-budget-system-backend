@@ -5,14 +5,16 @@ export interface User {
     email: string;
     role: string;
     status: string;
+    createdOn: string;
+    lastModifiedOn: string;
 }
 
-export enum Status {
+export enum UserStatus {
     PENDING = 'pending',
     ACTIVE = 'active',
 }
 
-export enum Role {
+export enum UserRole {
     USER = 'user',
     ADMIN = 'admin',
 }

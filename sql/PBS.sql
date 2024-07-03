@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS `personal-budget-system`.`users` (
   	`email` VARCHAR(255) NULL,
   	`role` VARCHAR(255) NOT NULL,
   	`status` VARCHAR(255) NULL,
+  	`createdOn` VARCHAR(255) NULL,
+  	`lastModifiedOn` VARCHAR(255) NULL,
 	PRIMARY KEY(`id`),
 	UNIQUE(`email`)
 );
@@ -19,6 +21,8 @@ CREATE TABLE IF NOT EXISTS `personal-budget-system`.`records` (
 	`description` VARCHAR(255) NOT NULL,
 	`category` VARCHAR(255) NOT NULL,
 	`amount` VARCHAR(255) NOT NULL,
+  	`createdOn` VARCHAR(255) NULL,
+  	`lastModifiedOn` VARCHAR(255) NULL,
 	PRIMARY KEY(`id`),
 	FOREIGN KEY (`userId`) REFERENCES users(`id`)
 
