@@ -12,7 +12,7 @@ export interface IRecordService {
         userId: string,
     ): Promise<Record>;
     GetRecord(id: string, userId: string): Promise<Record>; //will use filter for date
-    GetUserRecords(userId: string): Promise<Record[]>; //will use filter for date
+    GetAllRecords(userId: string): Promise<Record[]>; //will use filter for date
     DeleteRecord(id: string, userId: string): Promise<void>;
 }
 
@@ -72,7 +72,7 @@ export class RecordService implements IRecordService {
         const record = await this.recordrepo.getRecord(id, userId);
         return record;
     }
-    async GetUserRecords(userId: string): Promise<Record[]> {
+    async GetAllRecords(userId: string): Promise<Record[]> {
         const records = await this.recordrepo.getAllUserRecord(userId);
         return records;
     }

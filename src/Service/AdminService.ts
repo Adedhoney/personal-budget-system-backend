@@ -1,12 +1,14 @@
-import { User } from '@domain/Models';
+import { CustomError } from '@application/Error/Error';
+import { User, UserStatus } from '@domain/Models';
 import { IAccountRepository } from '@domain/Repository';
 
 export interface IAdminService {
-    getAllUsers(): Promise<User[]>;
-    getPendingUsers(): Promise<User[]>;
-    activateUser(id: string): Promise<void>;
+    GetAllUsers(): Promise<User[]>;
+    GetPendingUsers(): Promise<User[]>;
+    ActivateUser(id: string): Promise<void>;
+    GetUser(id: string): Promise<User>;
     // editUser(id: string): Promise<User>;
-    deleteUser(id: string): Promise<void>;
+    DeleteUser(id: string): Promise<void>;
 }
 
 export class AdminService implements IAdminService {
@@ -14,21 +16,33 @@ export class AdminService implements IAdminService {
         this.acctrepo = acctrepo;
     }
 
-    async getAllUsers(): Promise<User[]> {
+    async GetAllUsers(): Promise<User[]> {
         const users = await this.acctrepo.getUsers();
         return users;
     }
 
-    async getPendingUsers(): Promise<User[]> {
+    async GetPendingUsers(): Promise<User[]> {
         const users = await this.acctrepo.getUsers(true);
         return users;
     }
 
-    async activateUser(id: string): Promise<void> {
+    async GetUser(id: string): Promise<User> {
+        const user = await this.acctrepo.getUserById(id);
+        return user;
+    }
+
+    async ActivateUser(id: string): Promise<void> {
+        const user = await this.acctrepo.getUserById(id);
+        if (!user) {
+            throw new CustomError('User not found', 400);
+        }
+        if (user.status === UserStatus.ACTIVE) {
+            return;
+        }
         await this.acctrepo.activateUser(id);
     }
 
-    async deleteUser(id: string): Promise<void> {
+    async DeleteUser(id: string): Promise<void> {
         await this.acctrepo.activateUser(id);
     }
 }
