@@ -1,16 +1,16 @@
 import { IDatabase } from '@infrastructure/Database';
 import { Record } from '../Models';
 
-export interface IAccountRepository {
+export interface IRecordRepository {
     readonly database: IDatabase;
     saveRecord(record: Record): Promise<void>;
     getAllUserRecord(userId: string): Promise<Record[]>;
-    getRecord(id: string): Promise<Record>;
-    updateRecord(id: string, record: Record): Promise<void>;
-    deleteRecord(id: string): Promise<void>;
+    getRecord(id: string, userId: string): Promise<Record>;
+    updateRecord(id: string, record: Record, userId: string): Promise<void>;
+    deleteRecord(id: string, userId: string): Promise<void>;
 }
 
-export class AccountRepository implements IAccountRepository {
+export class RecordRepository implements IRecordRepository {
     constructor(readonly database: IDatabase) {}
     public async saveRecord(record: Record): Promise<void> {
         await this.database.excute(
@@ -35,16 +35,20 @@ export class AccountRepository implements IAccountRepository {
         return records as Record[];
     }
 
-    public async getRecord(id: string): Promise<Record> {
+    public async getRecord(id: string, userId: string): Promise<Record> {
         const record = await this.database.excute(
-            `SELECT * FROM records WHERE id = '${id}'`,
+            `SELECT * FROM records WHERE id = '${id}' AND userId = '${userId}'`,
         );
         return record[0] as Record;
     }
 
-    public async updateRecord(id: string, record: Record): Promise<void> {
+    public async updateRecord(
+        id: string,
+        record: Record,
+        userId: string,
+    ): Promise<void> {
         await this.database.excute(
-            `UPDATE records SET date = ?, description =? , category = ? , amount =? , lastModifiedOn) WHERE id = '${id}'`,
+            `UPDATE records SET date = ?, description =? , category = ? , amount =? , lastModifiedOn) WHERE id = '${id}' AND userId = '${userId}'`,
             [
                 record.date,
                 record.description,
@@ -55,7 +59,9 @@ export class AccountRepository implements IAccountRepository {
         );
     }
 
-    public async deleteRecord(id: string): Promise<void> {
-        await this.database.excute(`DELETE FROM records WHERE id = '${id}'`);
+    public async deleteRecord(id: string, userId: string): Promise<void> {
+        await this.database.excute(
+            `DELETE FROM records WHERE id = '${id}' AND userId = '${userId}'`,
+        );
     }
 }

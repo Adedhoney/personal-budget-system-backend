@@ -1,5 +1,5 @@
 import { IDatabase } from '@infrastructure/Database';
-import { User } from '../Models';
+import { User, UserStatus } from '../Models';
 
 export interface IAccountRepository {
     readonly database: IDatabase;
@@ -7,7 +7,7 @@ export interface IAccountRepository {
     getUserById(id: string): Promise<User>;
     getUserByEmail(email: string): Promise<User>;
     getUserByUserName(username: string): Promise<User>;
-    getUsers(): Promise<User[]>;
+    getUsers(pending?: boolean): Promise<User[]>;
     updateUser(id: string, user: User): Promise<void>;
     activateUser(id: string): Promise<void>;
     makeAdmin(id: string): Promise<void>;
@@ -53,8 +53,15 @@ export class AccountRepository implements IAccountRepository {
         return user[0] as User;
     }
 
-    public async getUsers(): Promise<User[]> {
-        const user = await this.database.excute(`SELECT * FROM users`);
+    public async getUsers(pending = false): Promise<User[]> {
+        let where = '';
+        if (pending) {
+            where = `WHERE status = ${UserStatus.PENDING}`;
+        }
+
+        const user = await this.database.excute(
+            `SELECT id, username, email, role, status, createdOn, lastModifiedOn FROM users ${where}`,
+        );
         return user as User[];
     }
 

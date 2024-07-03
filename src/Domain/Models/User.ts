@@ -1,12 +1,12 @@
 export interface User {
     id?: string;
     username: string;
-    password: string;
+    password?: string;
     email: string;
     role: string;
     status: string;
-    createdOn: string;
-    lastModifiedOn: string;
+    createdOn?: number;
+    lastModifiedOn?: number;
 }
 
 export enum UserStatus {

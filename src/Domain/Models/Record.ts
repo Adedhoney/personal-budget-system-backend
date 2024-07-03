@@ -1,15 +1,15 @@
 export interface Record {
     id?: string;
     userId: string;
-    date: string;
+    date: number;
     description: string;
     category: string;
     amount: number;
-    createdOn: string;
-    lastModifiedOn: string;
+    createdOn: number;
+    lastModifiedOn: number;
 }
 
 export enum RecordCategory {
     INCOME = 'income',
-    EXPENSE = ' expense',
+    EXPENSE = 'expense',
 }
