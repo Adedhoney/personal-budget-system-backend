@@ -18,7 +18,8 @@
         "paths": {
             "@application/*": ["Application/*"],
             "@infrastructure/*": ["Infrastructure/*"],
-            "@domain/*": ["Domain/*"]
+            "@domain/*": ["Domain/*"],
+            "@api/*": ["API/*"]
         },
         "typeRoots": ["./node_modules/@types"],
         "resolveJsonModule": true,

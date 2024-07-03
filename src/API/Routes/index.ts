@@ -53,3 +53,5 @@ router.delete(
     Authorization,
     adminctr.activateUser,
 );
+
+export { router };
