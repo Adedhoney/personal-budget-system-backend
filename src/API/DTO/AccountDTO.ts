@@ -5,14 +5,6 @@ export interface SignUpDTO {
 }
 
 export interface LoginDTO {
-    password: string;
     email: string;
+    password: string;
 }
-
-export interface ActivateUserDTO {
-    id: string;
-}
-
-// export interface UpdateUserDTO{
-
-// }

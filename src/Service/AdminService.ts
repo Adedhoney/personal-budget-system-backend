@@ -3,10 +3,10 @@ import { User, UserStatus } from '@domain/Models';
 import { IAccountRepository } from '@domain/Repository';
 
 export interface IAdminService {
-    GetAllUsers(): Promise<User[]>;
-    GetPendingUsers(): Promise<User[]>;
+    GetAllUsers(pending?: string): Promise<User[]>;
     ActivateUser(id: string): Promise<void>;
     GetUser(id: string): Promise<User>;
+    MakeAdmin(id: string): Promise<void>;
     // editUser(id: string): Promise<User>;
     DeleteUser(id: string): Promise<void>;
 }
@@ -16,13 +16,12 @@ export class AdminService implements IAdminService {
         this.acctrepo = acctrepo;
     }
 
-    async GetAllUsers(): Promise<User[]> {
+    async GetAllUsers(pending = 'false'): Promise<User[]> {
+        if (pending === 'true') {
+            const users = await this.acctrepo.getUsers(true);
+            return users;
+        }
         const users = await this.acctrepo.getUsers();
-        return users;
-    }
-
-    async GetPendingUsers(): Promise<User[]> {
-        const users = await this.acctrepo.getUsers(true);
         return users;
     }
 
@@ -42,7 +41,11 @@ export class AdminService implements IAdminService {
         await this.acctrepo.activateUser(id);
     }
 
+    async MakeAdmin(id: string): Promise<void> {
+        await this.acctrepo.makeAdmin(id);
+    }
+
     async DeleteUser(id: string): Promise<void> {
-        await this.acctrepo.activateUser(id);
+        await this.acctrepo.deleteUser(id);
     }
 }

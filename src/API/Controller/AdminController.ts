@@ -1,3 +1,4 @@
+import { IBaseQueryRequest } from '@application/Request/Request';
 import { successResponse } from '@application/Utils';
 import { IAdminService } from 'Service';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
@@ -8,26 +9,12 @@ export class AdminController {
     }
 
     getAllUsers: RequestHandler = async (
-        req: Request,
+        req: IBaseQueryRequest<{ pending?: string }>,
         res: Response,
         next: NextFunction,
     ) => {
         try {
-            const users = await this.service.GetAllUsers();
-
-            return successResponse(res, 'Users', { users });
-        } catch (err) {
-            next(err);
-        }
-    };
-
-    getPendingUsers: RequestHandler = async (
-        req: Request,
-        res: Response,
-        next: NextFunction,
-    ) => {
-        try {
-            const users = await this.service.GetPendingUsers();
+            const users = await this.service.GetAllUsers(req.query.pending);
 
             return successResponse(res, 'Users', { users });
         } catch (err) {
@@ -72,6 +59,20 @@ export class AdminController {
             await this.service.DeleteUser(req.params.userId);
 
             return successResponse(res, 'User Deleted');
+        } catch (err) {
+            next(err);
+        }
+    };
+
+    makeAdmin: RequestHandler = async (
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) => {
+        try {
+            await this.service.MakeAdmin(req.params.userId);
+
+            return successResponse(res, 'User made admin');
         } catch (err) {
             next(err);
         }

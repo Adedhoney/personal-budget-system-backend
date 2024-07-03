@@ -1,6 +1,6 @@
 import { IBaseRequest } from '@application/Request/Request';
 import { successResponse } from '@application/Utils';
-import { CreateRecordDTO, LoginDTO, SignUpDTO, UpdateRecordDTO } from 'API/DTO';
+import { CreateRecordDTO, UpdateRecordDTO } from 'API/DTO';
 import { IRecordService } from 'Service';
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 
