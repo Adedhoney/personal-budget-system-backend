@@ -13,7 +13,6 @@ export class Database implements IDatabase {
     private connectionObject: PoolOptions = {
         host: config.DATABASE.host,
         user: config.DATABASE.user,
-        password: config.DATABASE.password,
         database: config.DATABASE.database,
         port: config.DATABASE.port,
     };

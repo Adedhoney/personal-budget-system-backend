@@ -53,6 +53,7 @@ export class AccountService implements IAccountService {
 
     async Login(data: LoginDTO): Promise<{ token: string; user: User }> {
         const user = await this.acctrepo.getUserByEmail(data.email);
+        console.log(data.email);
         if (!user) {
             throw new CustomError('Account not found', 400);
         }

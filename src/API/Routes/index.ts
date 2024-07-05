@@ -6,7 +6,12 @@ import {
     RecordController,
 } from 'API/Controller';
 import { Authentication, Authorization, Validation } from 'API/Middleware';
-import { LogInSchema, SignUpSchema } from 'API/Schema';
+import {
+    CreateRecordSchema,
+    LogInSchema,
+    SignUpSchema,
+    UpdateRecordSchema,
+} from 'API/Schema';
 import { AccountService, AdminService, RecordService } from 'Service';
 
 import { Router } from 'express';
@@ -27,12 +32,23 @@ router.post('/account/sign-up', Validation(SignUpSchema), acctctr.signUp);
 router.post('/account/login', Validation(LogInSchema), acctctr.login);
 router.get('/account', Auth, acctctr.getUser);
 
-router.post('/record', Auth, recordctr.createRecord);
-router.post('/record/update/:id', Auth, recordctr.updateRecord);
+router.post(
+    '/record',
+    Auth,
+    Validation(CreateRecordSchema),
+    recordctr.createRecord,
+);
+router.post(
+    '/record/update/:id',
+    Auth,
+    Validation(UpdateRecordSchema),
+    recordctr.updateRecord,
+);
 router.get('/record', Auth, recordctr.getAllRecords);
 router.get('/record/:id', Auth, recordctr.getRecord);
 router.delete('/record/:id', Auth, recordctr.deleteRecord);
 
+// Admin Routes
 router.get('/admin/account', Auth, Authorization, adminctr.getAllUsers); //add ?pending=true for pending users
 router.get('/admin/account/:userId', Auth, Authorization, adminctr.getUser);
 router.post(

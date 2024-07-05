@@ -27,6 +27,7 @@ export class AdminService implements IAdminService {
 
     async GetUser(id: string): Promise<User> {
         const user = await this.acctrepo.getUserById(id);
+        delete user.password;
         return user;
     }
 

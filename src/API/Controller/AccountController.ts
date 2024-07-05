@@ -29,9 +29,9 @@ export class AccountController {
         next: NextFunction,
     ) => {
         try {
-            const response = await this.service.Login(req.body.data);
+            const data = await this.service.Login(req.body.data);
 
-            return successResponse(res, 'Login Successful', { response });
+            return successResponse(res, 'Login Successful', { ...data });
         } catch (err) {
             next(err);
         }
