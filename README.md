@@ -1,13 +1,5 @@
 # Personal Budget System
 
-### Contents
-
--   [Features](#features)
--   [Tech used](#tech-used)
--   [How to get the project](#how-to-get-the-project)
--   [Run the project using docker](#run-the-project-using-docker)
--   [API endpoints](#api-endpoints)
-
 ## Tech used:
 
 **Runtime environment**
@@ -62,3 +54,15 @@ git clone https://github.com/Adedhoney/personal-budget-system-backend
     ```bash
     npm start
     ```
+
+## Approach and Assumptions
+
+One of the envs is the superAdmin user that is created during production. There is only one superAdmin and you set the login at deployment through env.
+
+I added the user status (active - pending), but I did not implement any restrictions on this, because I didn't build a notification system that will alert either the admin of a new user, or the user when an admin accepts them.
+
+Admins can accepts users, make users admin and or delete user. The superAdmin cannot be deleted
+
+I didnt add a edit user endpoint for the admin because there is not user information that the admin should have control over.
+
+Each records can be delete or edited

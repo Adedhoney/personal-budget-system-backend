@@ -30,7 +30,7 @@ export class RecordRepository implements IRecordRepository {
 
     public async getAllUserRecord(userId: string): Promise<Record[]> {
         const records = await this.database.excute(
-            `SELECT * FROM records WHERE userId = '${userId}'`,
+            `SELECT * FROM records WHERE userId = '${userId}' ORDER BY date`,
         );
         return records as Record[];
     }

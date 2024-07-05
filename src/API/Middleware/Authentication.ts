@@ -28,7 +28,9 @@ export const Authentication =
                 );
 
             res.locals.authData = authData;
-            res.locals.isAdmin = authData.role === UserRole.ADMIN;
+            res.locals.isAdmin =
+                authData.role === UserRole.ADMIN ||
+                authData.role === 'superAdmin';
             next();
         } catch (err: JsonWebTokenError | any) {
             if (

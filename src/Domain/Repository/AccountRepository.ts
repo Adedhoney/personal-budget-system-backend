@@ -90,7 +90,7 @@ export class AccountRepository implements IAccountRepository {
         }
 
         const user = await this.database.excute(
-            `SELECT id, username, email, role, status, createdOn, lastModifiedOn FROM users ${where}`,
+            `SELECT id, username, email, role, status, createdOn, lastModifiedOn FROM users ${where} ORDER BY status DESC`,
         );
         return user as User[];
     }
@@ -115,6 +115,25 @@ export class AccountRepository implements IAccountRepository {
     }
 
     public async deleteUser(id: string): Promise<void> {
-        await this.database.excute(`DELETE FROM users WHERE id = '${id}'`);
+        const user = await this.database.excute(
+            `SELECT * FROM users WHERE id = '${id}' AND role = 'superAdmin'`,
+        );
+        if (user[0]) {
+            return;
+        }
+
+        const connection = await this.database.getConnection();
+        await connection.beginTransaction();
+        try {
+            await connection.query(`DELETE FROM records WHERE userId = '${id}`);
+            await connection.query(`DELETE FROM users WHERE id = '${id}`);
+
+            await connection.commit();
+        } catch (err) {
+            console.log({ err });
+            await connection.rollback();
+
+            throw new Error((err as Error).message);
+        }
     }
 }
