@@ -12,6 +12,8 @@ const envs = [
     'PORT',
     'NODE_ENV',
     'JWT_SECRET',
+    'SUPER_ADMIN_PASSWORD',
+    'SUPER_ADMIN_EMAIL',
 ];
 
 envs.forEach((value, index) => {
@@ -33,4 +35,6 @@ export default {
         database: process.env.DB_NAME as string,
     },
     JWT_SECRET: process.env.JWT_SECRET,
+    SUPER_ADMIN_PASSWORD: process.env.SUPER_ADMIN_PASSWORD,
+    SUPER_ADMIN_EMAIL: process.env.SUPER_ADMIN_EMAIL,
 };

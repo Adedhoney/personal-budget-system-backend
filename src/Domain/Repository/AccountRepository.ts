@@ -12,10 +12,40 @@ export interface IAccountRepository {
     activateUser(id: string): Promise<void>;
     makeAdmin(id: string): Promise<void>;
     deleteUser(id: string): Promise<void>;
+    activateSuperAdmin(user: User): Promise<void>;
 }
 
 export class AccountRepository implements IAccountRepository {
     constructor(readonly database: IDatabase) {}
+
+    public async activateSuperAdmin(user: User): Promise<void> {
+        const connection = await this.database.getConnection();
+        await connection.beginTransaction();
+        try {
+            await connection.query(
+                "DELETE FROM users WHERE role = 'superAdmin'",
+            );
+            await connection.query(
+                'INSERT INTO users (id, username, password, email, role, status, createdOn, lastModifiedOn) VALUES(?,?,?,?,?,?,?,?)',
+                [
+                    user.id,
+                    user.username,
+                    user.password,
+                    user.email,
+                    user.role,
+                    user.status,
+                    user.createdOn,
+                    user.lastModifiedOn,
+                ],
+            );
+            await connection.commit();
+        } catch (err) {
+            console.log({ err });
+            await connection.rollback();
+
+            throw new Error((err as Error).message);
+        }
+    }
     public async saveUser(user: User): Promise<void> {
         await this.database.excute(
             'INSERT INTO users (id, username, password, email, role, status, createdOn, lastModifiedOn) VALUES(?,?,?,?,?,?,?,?)',

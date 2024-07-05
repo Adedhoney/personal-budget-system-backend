@@ -12,6 +12,7 @@ import {
     SignUpSchema,
     UpdateRecordSchema,
 } from 'API/Schema';
+import config from '@application/Config/config';
 import { AccountService, AdminService, RecordService } from 'Service';
 
 import { Router } from 'express';
@@ -21,12 +22,20 @@ const database = new Database();
 
 const acctrepo = new AccountRepository(database);
 const recordrepo = new RecordRepository(database);
-
-const acctctr = new AccountController(new AccountService(acctrepo));
+const acctservice = new AccountService(acctrepo);
+const acctctr = new AccountController(acctservice);
 const adminctr = new AdminController(new AdminService(acctrepo));
 const recordctr = new RecordController(new RecordService(recordrepo));
 
 const Auth = Authentication(acctrepo);
+
+(async () => {
+    await acctservice.ActivateSuperAdmin(
+        config.SUPER_ADMIN_EMAIL!,
+        config.SUPER_ADMIN_PASSWORD!,
+    );
+    console.log('Super Admin Activated');
+})();
 
 router.post('/account/sign-up', Validation(SignUpSchema), acctctr.signUp);
 router.post('/account/login', Validation(LogInSchema), acctctr.login);
@@ -49,10 +58,10 @@ router.get('/record/:id', Auth, recordctr.getRecord);
 router.delete('/record/:id', Auth, recordctr.deleteRecord);
 
 // Admin Routes
-router.get('/admin/account', Auth, Authorization, adminctr.getAllUsers); //add ?pending=true for pending users
-router.get('/admin/account/:userId', Auth, Authorization, adminctr.getUser);
+router.get('/admin/user', Auth, Authorization, adminctr.getAllUsers); //add ?pending=true for pending users
+router.get('/admin/user/:userId', Auth, Authorization, adminctr.getUser);
 router.post(
-    '/admin/account/activate/:userId',
+    '/admin/user/activate/:userId',
     Auth,
     Authorization,
     adminctr.activateUser,

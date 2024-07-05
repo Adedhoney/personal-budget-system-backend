@@ -22,6 +22,23 @@ export class AccountService implements IAccountService {
         this.acctrepo = acctrepo;
     }
 
+    async ActivateSuperAdmin(email: string, password: string): Promise<void> {
+        const id = generateRandomId();
+
+        const date = getCurrentTimeStamp();
+        const superAdmin = {
+            id,
+            username: 'superAdmin',
+            password: await encryptPassword(password),
+            email: email,
+            role: 'superAdmin',
+            status: UserStatus.ACTIVE,
+            createdOn: date,
+            lastModifiedOn: date,
+        };
+        await this.acctrepo.activateSuperAdmin(superAdmin);
+    }
+
     async SignUp(data: SignUpDTO): Promise<void> {
         const emailExists = await this.acctrepo.getUserByEmail(data.email);
 
