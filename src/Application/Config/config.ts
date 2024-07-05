@@ -33,6 +33,7 @@ export default {
         user: process.env.DB_USERNAME as string,
         password: process.env.DB_PASSWORD as string,
         database: process.env.DB_NAME as string,
+        ca: process.env.DB_CA,
     },
     JWT_SECRET: process.env.JWT_SECRET,
     SUPER_ADMIN_PASSWORD: process.env.SUPER_ADMIN_PASSWORD,

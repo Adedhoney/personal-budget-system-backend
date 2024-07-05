@@ -104,13 +104,13 @@ export class AccountRepository implements IAccountRepository {
 
     public async activateUser(id: string): Promise<void> {
         await this.database.excute(
-            `UPDATE users SET status = active WHERE id = '${id}'`,
+            `UPDATE users SET status = 'active' WHERE id = '${id}'`,
         );
     }
 
     public async makeAdmin(id: string): Promise<void> {
         await this.database.excute(
-            `UPDATE users SET role = admin WHERE id = '${id}'`,
+            `UPDATE users SET role = 'admin' WHERE id = '${id}'`,
         );
     }
 

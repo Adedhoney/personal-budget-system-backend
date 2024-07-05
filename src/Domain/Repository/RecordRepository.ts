@@ -48,7 +48,7 @@ export class RecordRepository implements IRecordRepository {
         userId: string,
     ): Promise<void> {
         await this.database.excute(
-            `UPDATE records SET date = ?, description =? , category = ? , amount =? , lastModifiedOn) WHERE id = '${id}' AND userId = '${userId}'`,
+            `UPDATE records SET date=?, description=? , category=? , amount=? , lastModifiedOn=? WHERE id = '${id}' AND userId = '${userId}'`,
             [
                 record.date,
                 record.description,

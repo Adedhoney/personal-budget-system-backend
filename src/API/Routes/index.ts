@@ -67,16 +67,11 @@ router.post(
     adminctr.activateUser,
 );
 router.post(
-    '/admin/account/make-admin/:userId',
+    '/admin/user/make-admin/:userId',
     Auth,
     Authorization,
-    adminctr.activateUser,
+    adminctr.makeAdmin,
 );
-router.delete(
-    '/admin/account/:userId',
-    Auth,
-    Authorization,
-    adminctr.activateUser,
-);
+router.delete('/admin/user/:userId', Auth, Authorization, adminctr.deleteUser);
 
 export { router };
