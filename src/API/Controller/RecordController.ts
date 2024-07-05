@@ -88,7 +88,7 @@ export class RecordController {
                 res.locals.authData.id,
             );
 
-            return successResponse(res, 'User Deleted');
+            return successResponse(res, 'Record Deleted');
         } catch (err) {
             next(err);
         }
