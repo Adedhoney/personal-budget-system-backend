@@ -33,7 +33,7 @@
 1. Navigate & open CLI into the directory where you want to put this project & Clone this project using this command.
 
 ```bash
-git clone https://github.com/Adedhoney/guest_website
+git clone https://github.com/Adedhoney/personal-budget-system-backend
 ```
 
 #### Using manual download ZIP
@@ -62,37 +62,3 @@ git clone https://github.com/Adedhoney/guest_website
     ```bash
     npm start
     ```
-
-To get a detailed view of the endpoints, go to this [postman]
-
-## API endpoints:
-
-#### _Indication_
-
--   [x] **Authentication required**
--   [ ] **Authentication not required**
-
-### User related
-
--   [ ] Register: `POST localhost:3000/api/account/signup`
--   [] Login: `POST localhost:3000/api/account/login`
--   [x] Edit user profile: `POST localhost:3000/api/account/update-info`
--   [x] UpdatePassword: `POST localhost:3000/api/account/update-password`
--   [x] Get loggedin user's info: `GET localhost:3000/api/account`
--   [x] Delete loggedin user: `DELETE localhost:3000/api/account`
--   [ ] Forget password: `POST localhost:3000/api/account/forgot-password/:email`
--   [ ] Verify otp: `POST localhost:3000/api/account/verify-otp`
--   [ ] Reset password: `POST localhost:3000/api/account/reset-password`
-
-### Admin related
-
--   [x] Delete User: `DELETE localhost:3000/api/admin/account/delete/:userId`
--   [x] Ban User: `POST localhost:3000/api/admin/account/ban/:userId`
--   [x] Delete Post: `DELETE localhost:3000/api/admin/post/delete/:postId`
-
-### Admin related
-
--   [ ] Post comment: `POST localhost:3000/api/post`
--   [ ] Get post comment: `POST localhost:3000/api/post/:postId`
--   [ ] Get many post comment: `POST localhost:3000/api/post`
--   [x] Delete post comment: `DELETE localhost:3000/api/post/:postId`
