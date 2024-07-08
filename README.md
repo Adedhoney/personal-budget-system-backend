@@ -1,4 +1,14 @@
-# Personal Budget System
+# Personal Budget System Backend
+
+Link to live website https://coruscating-dasik-375aa2.netlify.app/register
+
+Link to Frontend github: https://github.com/Adedhoney/personal-budget-system-frontend
+
+Frontend Hosted on Netlify
+
+Backend Hosted on Render
+
+MySQL Database Hosted on Aiven
 
 ## Tech used:
 
